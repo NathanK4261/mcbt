@@ -1,4 +1,5 @@
 {
+	"":"For licensing information, see the \"LICENSE\" text file",
 	"BACKUP_FREQUENCY_HOURS": 24,
 	"ICLOUD_SYNC": true,
 	"BACKUP_DESTINATION": ""
