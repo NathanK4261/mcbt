@@ -26,7 +26,7 @@ def backup_worlds():
             sp.run(['osascript', '-e', f'display notification "Error: {error_message}" with title "mcbt"'])
         else:
             date = datetime.now()
-            sp.call(f'zip -r "{BACKUP_DESTINATION}/worlds-{date.year}-{date.month}-{date.day}.zip" "{BACKUP_DESTINATION}/saves"',shell=True)
+            sp.call(f'zip -r "{BACKUP_DESTINATION}/worlds.zip" "{BACKUP_DESTINATION}/saves"',shell=True)
             sp.call(f'rm -rf "{BACKUP_DESTINATION}/saves"',shell=True)
             sp.call('clear',shell=True)
             
