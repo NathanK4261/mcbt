@@ -24,18 +24,17 @@ def backup_worlds():
             # Notify about backup error
             error_message = result.stderr.strip() if result.stderr else ""
             sp.run(['osascript', '-e', f'display notification "Error: {error_message}" with title "mcbt"'])
-            print(error_message)
         else:
             date = datetime.now()
             sp.call(f'zip -r "{BACKUP_DESTINATION}/worlds-{date.year}-{date.month}-{date.day}.zip" "{BACKUP_DESTINATION}/saves"',shell=True)
+            sp.call(f'rm -rf "{BACKUP_DESTINATION}/saves"',shell=True)
             sp.call('clear',shell=True)
             
     except Exception as e:
         # Handle any unexpected exceptions
-        print(e.with_traceback(e.__traceback__))
         sp.run(['osascript', '-e', f'display notification "Exception: {e}" with title "mcbt"'])
 
 if __name__ == "__main__":
     while True:
         backup_worlds()
-        time.sleep(1800)  # Sleep for 30 minutes before next backup
+        time.sleep(43200)  # Sleep for 12 hours before next backup
