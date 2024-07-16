@@ -37,4 +37,4 @@ def backup_worlds():
 if __name__ == "__main__":
     while True:
         backup_worlds()
-        time.sleep(43200)  # Sleep for 12 hours before next backup
+        time.sleep(3600)  # Sleep for 1 hour before next backup
