@@ -19,11 +19,11 @@ def backup_worlds():
         else:
             # Notify about backup error
             error_message = result.stderr.strip() if result.stderr else ""
-            sp.run(['osascript', '-e', f'display notification "Error in backup: {error_message}" with title "mcbt"'])
+            sp.run(['osascript', '-e', f'display notification "Error: {error_message}" with title "mcbt"'])
             
     except Exception as e:
         # Handle any unexpected exceptions
-        sp.run(['osascript', '-e', f'display notification "Exception in backup: {e}" with title "mcbt"'])
+        sp.run(['osascript', '-e', f'display notification "Exception: {e}" with title "mcbt"'])
 
 if __name__ == "__main__":
     while True:

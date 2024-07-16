@@ -3,13 +3,17 @@
 # For licensing information, see the "LICENSE" text file
 import getpass as gp
 import subprocess as sp
+from mcbt import WORLDS_FOLDER, BACKUP_DESTINATION
 
 username = gp.getuser()
 
 def call(cmd: str):
 	sp.call(cmd, shell=True)
 
-call('chmod +x main')
+call('sudo chmod +x main')
+
+call(f'chmod -R u+rX,g+rX,o-rwx {WORLDS_FOLDER}/*')
+call(f'chmod -R u+rX,g+rX,o-rwx {BACKUP_DESTINATION}')
 
 
 # plist file for a backround process
@@ -20,7 +24,7 @@ plist = f"""<?xml version="1.0" encoding="UTF-8"?>
     <key>Label</key>
     <string>com.{username}.mcbt</string>
     <key>Program</key>
-    <string>/Users/{username}/mcbt/main</string>
+    <string>/Users/{username}/mcbt/mcbt.py</string>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
