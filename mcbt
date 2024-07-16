@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # For licensing information, see the "LICENSE" text file
+from datetime import datetime
 import subprocess as sp
 import time
 
@@ -8,20 +9,30 @@ import time
 WORLDS_FOLDER = ''
 BACKUP_DESTINATION = ''
 
+# Change permissions of directories for copying
+sp.call(f'chmod -R 777 "{WORLDS_FOLDER}"',shell=True)
+sp.call(f'chmod -R 777 "{BACKUP_DESTINATION}"',shell=True)
+
 def backup_worlds():
-    sp.run(['osascript', '-e', '"ENABLED" with title "mcbt"'])
+    sp.run(['osascript', '-e', f'display notification "ENABLED" with title "mcbt"'])
     try:
         # Perform the backup using cp command
-        result = sp.run(f'cp -r "{WORLDS_FOLDER}"/* "{BACKUP_DESTINATION}"', shell=True, capture_output=True, text=True)
+        result = sp.run(f'cp -r "{WORLDS_FOLDER}" "{BACKUP_DESTINATION}"', shell=True, capture_output=True, text=True)
 
         # Check return code
         if result.returncode != 0:
             # Notify about backup error
             error_message = result.stderr.strip() if result.stderr else ""
             sp.run(['osascript', '-e', f'display notification "Error: {error_message}" with title "mcbt"'])
+            print(error_message)
+        else:
+            date = datetime.now()
+            sp.call(f'zip -r "{BACKUP_DESTINATION}/worlds-{date.year}-{date.month}-{date.day}.zip" "{BACKUP_DESTINATION}/saves"',shell=True)
+            sp.call('clear',shell=True)
             
     except Exception as e:
         # Handle any unexpected exceptions
+        print(e.with_traceback(e.__traceback__))
         sp.run(['osascript', '-e', f'display notification "Exception: {e}" with title "mcbt"'])
 
 if __name__ == "__main__":
