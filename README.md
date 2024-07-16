@@ -4,7 +4,7 @@ Tool for backing up minecraft worlds on macOS
 ## Installing
 * Open **Terminal** and run these commands:
   * `cd`
-  * `git pull https://github.com/NathanK4261/mcbt.git`
+  * `git clone https://github.com/NathanK4261/mcbt.git`
   * `cd mcbt`
 
 * Now, open the _"setup"_ file in the _"mcbt"_ directory and change the WORLDS_FOLDER variable to where your minecraft worlds are located, and the BACKUP_DESTINATION variable to the directory in which you mant your worlds to be backed up to. Usually, WORLDS_FOLDER can be changed to _"~/Library/Application Support/minecraft/saves"_.
