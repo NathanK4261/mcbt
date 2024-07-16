@@ -9,6 +9,7 @@ WORLDS_FOLDER = ''
 BACKUP_DESTINATION = ''
 
 def backup_worlds():
+    sp.run(['osascript', '-e', '"ENABLED" with title "mcbt"'])
     try:
         # Perform the backup using cp command
         result = sp.run(f'cp -r "{WORLDS_FOLDER}"/* "{BACKUP_DESTINATION}"', shell=True, capture_output=True, text=True)
