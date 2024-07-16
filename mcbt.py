@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 # For licensing information, see the "LICENSE" text file
 import subprocess as sp
