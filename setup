@@ -40,7 +40,7 @@ with open(f'com.{username}.mcbt.plist', 'w') as f:
 call(f'launchctl stop com.{username}.mcbt.plist')
 call(f'launchctl unload com.{username}.mcbt.plist')
 call(f'rm ~/Library/LaunchAgents/com.{username}.mcbt.plist')
-#call('clear')
+call('clear')
 
 # Move new mcbt agent to LaunchAgents
 call(f'mv com.{username}.mcbt.plist ~/Library/LaunchAgents')
