@@ -14,10 +14,7 @@ def backup_worlds():
         result = sp.run(f'cp -r "{WORLDS_FOLDER}"/* "{BACKUP_DESTINATION}"', shell=True, capture_output=True, text=True)
 
         # Check return code
-        if result.returncode == 0:
-            sp.run(['osascript', '-e', 'display notification "Backup complete!" with title "mcbt"'])
-            
-        else:
+        if result.returncode != 0:
             # Notify about backup error
             error_message = result.stderr.strip() if result.stderr else ""
             sp.run(['osascript', '-e', f'display notification "Error: {error_message}" with title "mcbt"'])
