@@ -17,7 +17,7 @@ sp.run(['osascript', '-e', f'display notification "ENABLED" with title "mcbt"'])
 
 def backup_worlds():
     try:
-        # Perform the backup using cp command
+        # Perform the backup using rsync command
         result = sp.run(f'rsync -a "{WORLDS_FOLDER}" "{BACKUP_DESTINATION}"', shell=True, capture_output=True, text=True)
 
         # Check return code
