@@ -13,8 +13,10 @@ BACKUP_DESTINATION = ''
 sp.call(f'chmod -R 777 "{WORLDS_FOLDER}"',shell=True)
 sp.call(f'chmod -R 777 "{BACKUP_DESTINATION}"',shell=True)
 
+# Send notification on enabled
+sp.run(['osascript', '-e', f'display notification "ENABLED" with title "mcbt"'])
+
 def backup_worlds():
-    sp.run(['osascript', '-e', f'display notification "ENABLED" with title "mcbt"'])
     try:
         # Perform the backup using cp command
         result = sp.run(f'rsync -a "{WORLDS_FOLDER}" "{BACKUP_DESTINATION}"', shell=True, capture_output=True, text=True)
@@ -28,7 +30,7 @@ def backup_worlds():
             date = datetime.now()
             sp.call(f'zip -r "{BACKUP_DESTINATION}/worlds.zip" "{BACKUP_DESTINATION}/saves"',shell=True)
             sp.call(f'rm -rf "{BACKUP_DESTINATION}/saves"',shell=True)
-            sp.call('clear',shell=True)
+            #sp.call('clear',shell=True)
             
     except Exception as e:
         # Handle any unexpected exceptions
