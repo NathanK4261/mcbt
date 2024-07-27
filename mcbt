@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 # For licensing information, see the "LICENSE" text file
-from datetime import datetime
 import subprocess as sp
 import time
 
@@ -27,7 +26,6 @@ def backup_worlds():
             error_message = result.stderr.strip() if result.stderr else ""
             sp.run(['osascript', '-e', f'display notification "Error: {error_message}" with title "mcbt"'])
         else:
-            date = datetime.now()
             sp.call(f'zip -r "{BACKUP_DESTINATION}/worlds.zip" "{BACKUP_DESTINATION}/saves"',shell=True)
             sp.call(f'rm -rf "{BACKUP_DESTINATION}/saves"',shell=True)
             #sp.call('clear',shell=True)
