@@ -1,40 +1,26 @@
-#!/usr/bin/env python3
-
 # For licensing information, see the "LICENSE" text file
 import subprocess as sp
 import time
 
 # Config variables
-WORLDS_FOLDER = ''
-BACKUP_DESTINATION = ''
-
-# Change permissions of directories for copying
-sp.call(f'chmod -R 777 "{WORLDS_FOLDER}"',shell=True)
-sp.call(f'chmod -R 777 "{BACKUP_DESTINATION}"',shell=True)
+WORLDS_FOLDER =
+BACKUP_DESTINATION =
 
 # Send notification on enabled
 sp.run(['osascript', '-e', f'display notification "ENABLED" with title "mcbt"'])
 
 def backup_worlds():
-    try:
-        # Perform the backup using rsync command
-        result = sp.run(f'rsync -a "{WORLDS_FOLDER}" "{BACKUP_DESTINATION}"', shell=True, capture_output=True, text=True)
+	# Perform the backup using rsync command
+	result = sp.run(f'rsync -av "{WORLDS_FOLDER}" "{BACKUP_DESTINATION}"', shell=True, capture_output=True, text=True)
 
-        # Check return code
-        if result.returncode != 0:
-            # Notify about backup error
-            error_message = result.stderr.strip() if result.stderr else ""
-            sp.run(['osascript', '-e', f'display notification "Error: {error_message}" with title "mcbt"'])
-        else:
-            sp.call(f'zip -r "{BACKUP_DESTINATION}/worlds.zip" "{BACKUP_DESTINATION}/saves"',shell=True)
-            sp.call(f'rm -rf "{BACKUP_DESTINATION}/saves"',shell=True)
-            #sp.call('clear',shell=True)
-            
-    except Exception as e:
-        # Handle any unexpected exceptions
-        sp.run(['osascript', '-e', f'display notification "Exception: {e}" with title "mcbt"'])
-
+	sp.call(f'zip -r "{BACKUP_DESTINATION}/worlds.zip" "{BACKUP_DESTINATION}/saves"',shell=True)
+	sp.call(f'rm -rf "{BACKUP_DESTINATION}/saves"',shell=True)
+	#sp.call('clear',shell=True)
+	
 if __name__ == "__main__":
-    while True:
-        backup_worlds()
-        time.sleep(3600)  # Sleep for 1 hour before next backup
+	while True:
+		backup_worlds()
+		try:
+			time.sleep(3600)  # Sleep for 1 hour before next backup
+		except KeyboardInterrupt:
+			pass
