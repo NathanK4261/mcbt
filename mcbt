@@ -3,19 +3,27 @@ import subprocess as sp
 import time
 
 # Config variables
-WORLDS_FOLDER =
-BACKUP_DESTINATION =
+WORLDS_FOLDER = ''
+BACKUP_DESTINATION = ''
 
 # Send notification on enabled
 sp.run(['osascript', '-e', f'display notification "ENABLED" with title "mcbt"'])
 
 def backup_worlds():
 	# Perform the backup using rsync command
-	result = sp.run(f'rsync -av "{WORLDS_FOLDER}" "{BACKUP_DESTINATION}"', shell=True, capture_output=True, text=True)
+	result = sp.run(f'rsync -a "{WORLDS_FOLDER}" "{BACKUP_DESTINATION}"', shell=True, capture_output=True, text=True)
 
-	sp.call(f'zip -r "{BACKUP_DESTINATION}/worlds.zip" "{BACKUP_DESTINATION}/saves"',shell=True)
-	sp.call(f'rm -rf "{BACKUP_DESTINATION}/saves"',shell=True)
-	#sp.call('clear',shell=True)
+	# Check return code
+	if result.returncode != 0:
+		error_message = result.stderr.strip() if result.stderr else ""
+
+		# Notify user about backup error
+		sp.run(['osascript', '-e', f'display notification "Error: {error_message}" with title "mcbt"'])
+
+	else:
+		sp.call(f'zip -r "{BACKUP_DESTINATION}/worlds.zip" "{BACKUP_DESTINATION}/saves"',shell=True)
+		sp.call(f'rm -rf "{BACKUP_DESTINATION}/saves"',shell=True)
+		#sp.call('clear',shell=True)
 	
 if __name__ == "__main__":
 	while True:
